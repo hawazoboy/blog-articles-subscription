@@ -1,0 +1,239 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Page Content -->
+<!-- Banner Starts Here -->
+<div class="heading-page header-text">
+  <section class="page-heading">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="text-content">
+            <h4>Article Details</h4>
+            <h2>{{ article.title }}</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- Banner Ends Here -->
+
+<section class="call-to-action">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="main-content">
+          <div class="row">
+            <div class="col-lg-8">
+              <span>Stand Blog HTML5 Template</span>
+              <h4>Creative HTML Template For Bloggers!</h4>
+            </div>
+            <div class="col-lg-4">
+              <div class="main-button">
+                <a rel="nofollow" href="https://templatemo.com/tm-551-stand-blog" target="_parent">Download Now!</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="blog-posts grid-system">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="all-blog-posts">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="blog-post">
+                <div class="blog-thumb">
+                  <img src="{{article.image.url}}" alt="">
+                </div>
+                <div class="down-content">
+                  <span>{{article.category}}</span>
+                  <a href="post-details.html">
+                    <h4>{{article.title}}</h4>
+                  </a>
+                  <ul class="post-info">
+                    <li><a href="#">Admin</a></li>
+                    <li><a href="#">May 12, 2020</a></li>
+                    <li><a href="#">10 Comments</a></li>
+                  </ul>
+                  <p>{{article.body}}
+                  </p>
+                  <div class="post-options">
+                    <div class="row align-items-center">
+
+                      <div class="col-md-5">
+                        <ul class="post-tags mb-0">
+                          <li><i class="fa fa-tags"></i></li>
+                          <li><a href="#">Best Templates</a>,</li>
+                          <li><a href="#">TemplateMo</a></li>
+                        </ul>
+                      </div>
+
+                      <div class="col-md-2 text-center">
+                        <a href="#" id="like-btn" data-url="{% url 'article:like_post' article.slug %}"
+                          class="text-danger text-decoration-none">
+
+                          <span id="heart" style="font-size:28px;">
+                            {% if is_liked %}
+                            ♥
+                            {% else %}
+                            ♡
+                            {% endif %}
+                          </span>
+
+                          <span id="likes-count">
+                            {{ article.total_likes }}
+                          </span>
+
+                        </a>
+                      </div>
+
+                      <ul class="post-share">
+
+                        <li><i class="fa fa-share-alt"></i></li>
+
+                        <li>
+                          <a href="https://t.me/share/url?url={{ request.build_absolute_uri }}" target="_blank">
+                            <i class="fa fa-telegram"></i>
+                          </a>
+                        </li>
+
+                        <li>
+                          <a href="https://wa.me/?text={{ request.build_absolute_uri }}" target="_blank">
+                            <i class="fa fa-whatsapp"></i>
+                          </a>
+                        </li>
+
+                        <li>
+                          <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}"
+                            target="_blank">
+                            <i class="fa fa-twitter"></i>
+                          </a>
+                        </li>
+
+                        <li>
+                          <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}"
+                            target="_blank">
+                            <i class="fa fa-facebook"></i>
+                          </a>
+                        </li>
+                        <li>
+                          <a href="#" onclick="copyArticleLink(); return false;">
+                            <i class="fa fa-link"></i>
+                          </a>
+                        </li>
+
+                        <script>
+                          function copyArticleLink() {
+                            navigator.clipboard.writeText(window.location.href);
+                            alert("link copied");
+                          }
+                        </script>
+
+                      </ul>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-12">
+              <div class="sidebar-item comments">
+                <div class="sidebar-heading">
+                  <h2>Comments</h2>
+                </div>
+                <div class="content">
+                  <ul>
+                    {% for comment in article.comments.all %}
+                    {% if comment.parent is None %}
+                    <li>
+                      <div class="author-thumb">
+                        <img src="assets/images/comment-author-01.jpg" alt="">
+                      </div>
+                      <div class="right-content">
+                        <h4>{{ comment.user }}<span>{{ comment.created }}</span></h4>
+                        <p>{{ comment.body}}</p>
+                      </div>
+                    </li>
+
+                    {% if comment.replies.all %}
+
+                    {% for reply in comment.replies.all %}
+                    <li class="replied">
+                      <div class="author-thumb">
+                        <img src="assets/images/comment-author-02.jpg" alt="">
+                      </div>
+                      <div class="right-content">
+                        <h4>{{ reply.user}}<span>{{ reply.created }}</span></h4>
+                        <p>{{ reply.body }}</p>
+                      </div>
+                    </li>
+                    {% endfor %}
+
+                    {% endif %}
+
+                    {% endif %}
+
+                    {% endfor %}
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-12">
+              <div class="sidebar-item submit-comment">
+                <div class="sidebar-heading">
+                  <h2>Your comment</h2>
+                </div>
+                <div class="content">
+                  <form id="comment" action="#" method="post">
+                    <div class="row">
+                      <div class="col-md-6 col-sm-12">
+                        <fieldset>
+                          <input name="name" type="text" id="name" placeholder="Your name" required="">
+                        </fieldset>
+                      </div>
+                      <div class="col-md-6 col-sm-12">
+                        <fieldset>
+                          <input name="email" type="text" id="email" placeholder="Your email" required="">
+                        </fieldset>
+                      </div>
+                      <div class="col-md-12 col-sm-12">
+                        <fieldset>
+                          <input name="subject" type="text" id="subject" placeholder="Subject">
+                        </fieldset>
+                      </div>
+                      <div class="col-lg-12">
+                        <fieldset>
+                          <textarea name="message" rows="6" id="message" placeholder="Type your comment"
+                            required=""></textarea>
+                        </fieldset>
+                      </div>
+                      <div class="col-lg-12">
+                        <fieldset>
+                          <button type="submit" id="form-submit" class="main-button">Submit</button>
+                        </fieldset>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% include 'includes/sidebar.html' %}
+    </div>
+  </div>
+</section>
+
+
+{% endblock %}
