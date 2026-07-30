@@ -1,4 +1,4 @@
-# Blog Stand | مستند پروژه
+# blog articles subscription
 
 <div align="center">
 
