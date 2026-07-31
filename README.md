@@ -1,2 +1,2 @@
 # blog-articles-subscription
-Presenting articles and publishing them for public access and sharing
+Presenting articles for public access, reading, and easy sharing.
