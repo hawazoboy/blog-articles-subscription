@@ -19,7 +19,7 @@ def article_detail(request, slug):
 
 
 def all_articles(request):
-    all_articles = Post.objects.all()
+    all_articles = Post.objects.all().order_by("-id") 
     paginator = Paginator(all_articles, 2)
     page_number = request.GET.get('page')
     objects_list = paginator.get_page(page_number)
